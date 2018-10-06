@@ -63,17 +63,22 @@ theta_prob = np.zeros((docs.shape[0],topics))
 phi_num = np.zeros((words_uniq.shape[0],topics))
 phi_prob = np.zeros((words_uniq.shape[0],topics))
 
+
 def gibbs_proc(word_doc_topic_task,sample,idx):
 	# make topic-doc relation
 	for a in range(docs.shape[0]):
+		# range(6): 0,1,2,3,4,5
 		for b in range(topics):
+			# topics range: 0, 1
 			count = np.count_nonzero(((word_doc_topic_task[:,1]) == str(a)) & (word_doc_topic_task[:,2] == str(b)))
 			theta_num[a][b] = count + alpha
 
+	# /count to every element in theta_num
 	for a in range(docs.shape[0]):
 		for b in range(topics):
 			count = np.sum(theta_num[a])
 			theta_prob[a][b] = float(theta_num[a][b])/float(count)
+
 	# make word-topic relation 
 	for a in range(words_uniq.shape[0]):
 		for b in range(topics):
@@ -101,6 +106,7 @@ def gibbs_proc(word_doc_topic_task,sample,idx):
 
 
 if __name__ == "__main__":
+
 	# do gibbs sampling proc
 	for a in range(epoch):
 		for b in range(word_doc_topic.shape[0]):
@@ -111,20 +117,21 @@ if __name__ == "__main__":
 			# delete the b th element of word_doc_topic_task 
 			topic_max = gibbs_proc(word_doc_topic_task,sample,b)
 			word_doc_topic[b][2] = topic_max
+
 			del word_doc_topic_task
 	# print final state
-	gibbs_proc(word_doc_topic,[None,None,None,None],-1)
+	# gibbs_proc(word_doc_topic,[None,None,None,None],-1)
 
-print "theta P(Topic;Doc)"
-for a in range(theta_num.shape[0]):
-	print "Doc%d => %s = %s" % (a, str(theta_num[a]), str(theta_prob[a]))
+# print "theta P(Topic;Doc)"
+# for a in range(theta_num.shape[0]):
+# 	print "Doc%d => %s = %s" % (a, str(theta_num[a]), str(theta_prob[a]))
 
-print "phi P(World;Topic)"
-for a in range(phi_num.shape[0]):
-	print "%s => %s = %s" % (words_uniq[a], str(phi_num[a]), str(phi_prob[a]))
+# print "phi P(World;Topic)"
+# for a in range(phi_num.shape[0]):
+# 	print "%s => %s = %s" % (words_uniq[a], str(phi_num[a]), str(phi_prob[a]))
 
-print "word_doc_topic"
-print word_doc_topic
+# print "word_doc_topic"
+# print word_doc_topic
 
 
 
