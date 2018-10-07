@@ -72,6 +72,8 @@ def gibbs_proc(word_doc_topic_task,sample,idx):
 			# topics range: 0, 1
 			count = np.count_nonzero(((word_doc_topic_task[:,1]) == str(a)) & (word_doc_topic_task[:,2] == str(b)))
 			theta_num[a][b] = count + alpha
+			# a - doc num 
+			# b - topic num 
 
 	# /count to every element in theta_num
 	for a in range(docs.shape[0]):
@@ -97,9 +99,12 @@ def gibbs_proc(word_doc_topic_task,sample,idx):
 	if idx >= 0:
 		p_post = np.zeros((topics))
 		for a in range(topics):
+			# a - topics: 0, 1
 			p_topic_doc = theta_prob[int(sample[1])][a]
+			# sample[1] - doc num
 			topic_tot = np.sum((phi_num.T)[a])
 			p_word_topic = phi_num[int(sample[3])][a]/topic_tot
+			# sample[3] - word unique id 
 			p_post[a] = p_topic_doc * p_word_topic
 		topic_max = np.argmax(p_post)
 		return topic_max 
