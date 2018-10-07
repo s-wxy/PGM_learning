@@ -124,19 +124,19 @@ if __name__ == "__main__":
 			word_doc_topic[b][2] = topic_max
 
 			del word_doc_topic_task
-	# print final state
-	# gibbs_proc(word_doc_topic,[None,None,None,None],-1)
+	print final state
+	gibbs_proc(word_doc_topic,[None,None,None,None],-1)
 
-# print "theta P(Topic;Doc)"
-# for a in range(theta_num.shape[0]):
-# 	print "Doc%d => %s = %s" % (a, str(theta_num[a]), str(theta_prob[a]))
+	print "theta P(Topic;Doc)"
+	for a in range(theta_num.shape[0]):
+		print "Doc%d => %s = %s" % (a, str(theta_num[a]), str(theta_prob[a]))
 
-# print "phi P(World;Topic)"
-# for a in range(phi_num.shape[0]):
-# 	print "%s => %s = %s" % (words_uniq[a], str(phi_num[a]), str(phi_prob[a]))
+	print "phi P(World;Topic)"
+	for a in range(phi_num.shape[0]):
+		print "%s => %s = %s" % (words_uniq[a], str(phi_num[a]), str(phi_prob[a]))
 
-# print "word_doc_topic"
-# print word_doc_topic
+	print "word_doc_topic"
+	print word_doc_topic
 
 
 
