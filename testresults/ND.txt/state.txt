@@ -1,0 +1,2 @@
+{'sampler': {'status': 'ready', '_current_iter': 10, '_iter': 10, '_tune_interval': 1000, '_burn': 0, '_thin': 1, '_tuned_count': 0, '_tune_throughout': True, '_burn_till_tuned': False}, 'stochastics': {'nd': array([[ 0.36295793,  0.18968403],
+       [ 1.22847147, -0.61487397]])}, 'step_methods': {'DrawFromPrior_nd': {}}}
