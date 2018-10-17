@@ -1,6 +1,7 @@
 
 import numpy as np
 import pandas as pd
+import itertools
 
 # input - rawdb
 # entity - attribute - source 
@@ -26,9 +27,10 @@ def readfile():
 	return docs.transpose() 
 
 rawdb = readfile()
-nentities = len(np.unique(rawdb[:,0]))
-nattributes = len(np.unique(rawdb[:,1]))
-nsources = len(np.unique(rawdb[:,2]))
+entities = np.unique(rawdb[:,0])
+attributes = np.unique(rawdb[:,1])
+sources = np.unique(rawdb[:,2])
+nentities,nattributes,nsources = len(entities),len(attributes),len(sources)
 
 # can build with dictionary as well 
 sourcemapper = np.array(np.unique(rawdb[:,2]))
@@ -40,9 +42,24 @@ factsmapper = factsmapper[np.lexsort(factsmapper[:,::-1].T)] # sort based on the
 factsmapper = np.c_[factsmapper,range(factsmapper.shape[0])]
 
 # initialize claim table 
+at, so = set(),set()
+# for et in entities:
+for row in rawdb:
+	if 'HP' in row:
+		at.add(row[1])
+		so.add(row[2])
+atSo = list(itertools.product(list(at),list(so)))
+atSo = np.array(atSo)
 
-for entity in np.unique(rawdb[:,0]):
-	print i
+for i in range(len(atSo)):
+	if np.r_[['HP'],atSo[i]] in rawdb:
+		claim = np.r_[atSo[i],[1]]
+	else:
+		claim = np.r_[atSo[i],[0]]
+
+print np.r_[['HP'],atSo[1]]
+aaa = np.r_[['HP'],atSo[1]] 
+print np.array(['HP' 'JD' 'IMDB']) in rawdb
 
 
 ######
