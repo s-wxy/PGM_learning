@@ -57,9 +57,8 @@ for i in range(len(atSo)):
 	else:
 		claim = np.r_[atSo[i],[0]]
 
-print np.r_[['HP'],atSo[1]]
-aaa = np.r_[['HP'],atSo[1]] 
-print np.array(['HP' 'JD' 'IMDB']) in rawdb
+print np.r_[['HP'],atSo[1]] in rawdb
+print ['HP' 'JD' 'IMDB'] in rawdb
 
 
 ######
