@@ -48,10 +48,10 @@ for row in rawdb:
 	if 'HP' in row:
 		at.add(row[1])
 		so.add(row[2])
-atSo = list(itertools.product(list(at),list(so)))
+atSo = list(itertools.product(list(at),list(so))) # generate all possible combination
 atSo = np.array(atSo)
-# print atSo
 
+# initialize observation based on raw data 
 for i in range(len(atSo)):
 	if np.r_[['HP'],atSo[i]] in rawdb:
 		claim = np.r_[atSo[i],[1]]
