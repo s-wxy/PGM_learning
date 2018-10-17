@@ -50,6 +50,7 @@ for row in rawdb:
 		so.add(row[2])
 atSo = list(itertools.product(list(at),list(so)))
 atSo = np.array(atSo)
+# print atSo
 
 for i in range(len(atSo)):
 	if np.r_[['HP'],atSo[i]] in rawdb:
@@ -57,8 +58,8 @@ for i in range(len(atSo)):
 	else:
 		claim = np.r_[atSo[i],[0]]
 
-print np.r_[['HP'],atSo[1]] in rawdb
-print ['HP' 'JD' 'IMDB'] in rawdb
+# print np.r_[['HP'],atSo[1]] in rawdb
+# print ['HP' 'JD' 'IMDB'] in rawdb
 
 
 ######
