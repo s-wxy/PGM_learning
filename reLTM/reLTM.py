@@ -105,25 +105,42 @@ for e,a2s in e2a2s.items():
 		ns += s	
 	for a,s in a2s.items():	
 		for es in set(ns):			
-			e2a2s2o[e][a][es] = 0.0
+			e2a2s2o[e][a][es] = [0.0]
 
 for e,a2s2o in e2a2s2o.items():
 	for a,s2o in a2s2o.items():
 		for s,o in s2o.items():
 			if e2a2s[e][a][0] == s:
-				e2a2s2o[e][a][s] = 1.0
+				e2a2s2o[e][a][s] = [1.0]
 
-# build facts 
+# build facts - random initiallize truth to 0 or 1 
 f2t = {}
 for e,a2fid in ea2fid.items():
 	for a,fid in a2fid.items():
 		if e not in f2t:f2t[e]={}
-		if a not in f2t[e]:t = random.random()
-			if t < 0.5:f2t[e][a] = 0.0
-			else:f2t[e][a] = 1.0
+		t = random.random()
+		if t < 0.5:f2t[e][a] = 0.0
+		else:f2t[e][a] = 1.0
 
 # build ctsc 
-s2o2t = {}
+s2to = {}
+for s in sSet:
+	if s not in s2to:s2to[s]={}
+	s2to[s][0.0],s2to[s][1.0] = [0.0,1.0],[0.0,1.0]
+
+# build cwit, can merge with claim
+e2a2s2ot = {}
+n = 0
+for e,a2s2o in e2a2s2o.items():
+	if e not in e2a2s2ot: e2a2s2ot[e]={}
+	for a,s2o in a2s2o.items():
+		if a not in e2a2s2ot: e2a2s2ot[e][a]={}
+		for s,o in s2o.items():
+			if s not in e2a2s2ot: e2a2s2ot[e][a][s]=[o]
+			t = f2t[e][a]
+			e2a2s2ot[e][a][s].append(t)
+
+
 
 
 
