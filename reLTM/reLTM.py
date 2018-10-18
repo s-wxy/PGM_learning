@@ -41,24 +41,30 @@ factsmapper = np.array(facts)
 factsmapper = factsmapper[np.lexsort(factsmapper[:,::-1].T)] # sort based on the first column 
 factsmapper = np.c_[factsmapper,range(factsmapper.shape[0])]
 
-# initialize claim table 
-at, so = set(),set()
-# for et in entities:
-for row in rawdb:
-	if 'HP' in row:
-		at.add(row[1])
-		so.add(row[2])
-atSo = list(itertools.product(list(at),list(so))) # generate all possible combination
-atSo = np.array(atSo)
+# initialize claim table
+def iniObservation(atSo,et):
+	claimT = np.zeros(shape = (1,4))
+	for i in range(len(atSo)):
+		if (np.r_[[et],atSo[i]].tolist() == rawdb).all(1).any():
+			claim = np.r_[atSo[i],[1],[et]]
+			claimT = np.vstack((claimT,claim))
+		else:
+			claim = np.r_[atSo[i],[0],[et]]
+			claimT = np.vstack((claimT,claim))
+	return np.delete(claimT,0,axis=0)
 
-# initialize observation based on raw data 
-for i in range(len(atSo)):
-	if np.r_[['HP'],atSo[i]] in rawdb:
-		claim = np.r_[atSo[i],[1]]
-	else:
-		claim = np.r_[atSo[i],[0]]
+at, so, claimTable = set(),set(),np.zeros(shape = (1,4))
+for et in entities:
+	for row in rawdb:
+		if et in row:
+			at.add(row[1])
+			so.add(row[2])
+	atSo = list(itertools.product(list(at),list(so))) # generate all possible combination 
+	claimT = iniObservation(np.array(atSo),et)
+	claimTable = np.vstack((claimTable,claimT))
+claimTable = np.delete(claimTable,0,axis=0)  # 76, shoule be 37 
 
-# print np.r_[['HP'],atSo[1]] in rawdb
+
 # print ['HP' 'JD' 'IMDB'] in rawdb
 
 
@@ -76,6 +82,7 @@ for line in fr:
 		e2a2s[e][a]=[]
 	e2a2s[e][a].append(s)
 
+id2f, id2s = {},{}
 
 
 
