@@ -64,14 +64,18 @@ for et in entities:
 	claimTable = np.vstack((claimTable,claimT))
 claimTable = np.delete(claimTable,0,axis=0)  # 76, shoule be 37 
 
+#########################################################################################
 
-# print ['HP' 'JD' 'IMDB'] in rawdb
-
-
-######
-
+# read raw data 
 fr = open('rawdb.txt','rb')
 fr = fr.readlines()
+n2eas,n = {},0
+for line in fr:
+	arr = line.strip('\n').split('\t')
+	e,a,s = arr[0],arr[1],arr[2]
+	n2eas[n] = [e,a,s]
+	n += 1
+
 e2a2s = {}
 for line in fr:
 	arr = line.strip('\n').split('\t')
@@ -82,7 +86,23 @@ for line in fr:
 		e2a2s[e][a]=[]
 	e2a2s[e][a].append(s)
 
-id2f, id2s = {},{}
+
+# build factmapper, sourcemapper 
+ea2fid, s2sid,m,l = {},{},0,0
+for e,a2s in e2a2s.items():
+	if e not in ea2fid:
+		ea2fid[e] = {}
+	for a,s in a2s.items():
+		if a not in ea2fid[e]:
+			ea2fid[e][a] = m
+			m += 1
+		if s[0] not in s2sid:
+			s2sid[s[0]] = l
+			l += 1
+
+# build claim
+ 
+
 
 
 
