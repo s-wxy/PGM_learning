@@ -1,7 +1,10 @@
 
 # code in dictionary base 
 
-burin,maxit,sample_step = 5,30,1
+import random
+
+burin,maxit,sample_step,threshold = 5,30,1,0.5
+alpha0, alpha1, beta = [10,1000],[50,50],[10,10]
 
 # read raw data 
 fr = open('rawdb.txt','rb')
@@ -31,23 +34,23 @@ for e,a2s in e2a2s.items():
 
 # build claim
 e2a2s2o = {}
+n = 0
 for e,a2s in e2a2s.items():
-	if e not in e2a2s2o:
-		e2a2s2o[e]={}
+	if e not in e2a2s2o: e2a2s2o[e]={}
 	ns = list()
 	for a,s in a2s.items():
-		if a not in e2a2s2o[e]: 
-			e2a2s2o[e][a]={}
+		if a not in e2a2s2o[e]: e2a2s2o[e][a]={}
 		ns += s	
 	for a,s in a2s.items():	
-		for es in set(ns):			
-			e2a2s2o[e][a][es] = [0.0]
-
-for e,a2s2o in e2a2s2o.items():
-	for a,s2o in a2s2o.items():
-		for s,o in s2o.items():
-			if e2a2s[e][a][0] == s:
+		for es in set(ns): 
+			if e2a2s[e][a][0] != s:
+				e2a2s2o[e][a][es] = [0.0]
+				n +=1
+			else:
 				e2a2s2o[e][a][s] = [1.0]
+				n += 1
+print e2a2s2o
+
 
 # build facts - random initiallize truth to 0 or 1 
 f2t = {}
