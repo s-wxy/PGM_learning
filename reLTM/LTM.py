@@ -3,7 +3,7 @@ import random
 from itertools import chain
 
 
-burin,maxit,sample_step,threshold = 5,30,1,0.5
+burnin,maxit,sample_step,threshold = 5,30,1,0.5
 alpha0, alpha1, beta = [10,1000],[50,50],[10,10]
 sample_size = maxit/sample_step - burnin/sample_step
 
@@ -48,18 +48,34 @@ for [entity,value2sid] in entity2value2sid.items():
 			entity2value2sid2ob_t[entity][value]={}	
 		sids = entity2value2sid[entity].values()
 		for s in set(chain(*sids)):
+			entity2value2sid2ob_t[entity][value][s]=[0.0,0.0]
 			if [entity,value] in sid2double[s]:
-				entity2value2sid2ob_t[entity][value][s][0]=1.0
+				entity2value2sid2ob_t[entity][value][s][0]= 1.0
 			else:
-				entity2value2sid2ob_t[entity][value][s][0]=0.0
-			entity2value2sid2ob_t[entity][value][s][1]=entity2value2truth[entity][value]
+				entity2value2sid2ob_t[entity][value][s][0]= 0.0
+			entity2value2sid2ob_t[entity][value][s][1]= entity2value2truth[entity][value]
+
+
+
+def factUpdate(probs):
+	z,res = sum(probs),0
+	if z != 1:
+		for i in probs:
+			i = i/z
+# https://stat.ethz.ch/R-manual/R-devel/library/stats/html/Multinom.html	
+# 这个还没写完，后面会用到
 
 # gibbs loop 
-it = 0 
-while it < maxit:
-	for [entity,value2truth] in entity2value2truth.items():
-		for [value,truth] in value2truth.items():
-			
+it,probs = 0,[0.0,0.0]
+# while it < maxit:
+for [entity,value2truth] in entity2value2truth.items():
+	for [value,truth] in value2truth.items():		
+		if truth == 0.0:		
+			conditional_claim0 = 1.0 # ???
+
+			# 这里开始,给臭的note
+			conditional_claim0 = conditional_claim0 * (observation) -1.0 + alpha0[observation]
+			/ TP + FN - 1.0 + alpha1[entity,0] + alpha1[entity,1]
 
 
 
