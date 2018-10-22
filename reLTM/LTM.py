@@ -24,7 +24,7 @@ fr.close()
 # fact-claim table initialization 
 entity2value2truth, entity2value2sid = {},{}
 for [sid,double] in sid2double.items():
-	for [entity,value] in double: 
+	for [entity,value] in double.items(): 
 		if entity not in entity2value2truth:
 			entity2value2truth[entity]={}
 		if value not in entity2value2truth[entity]:
@@ -54,6 +54,7 @@ for [entity,value2sid] in entity2value2sid.items():
 			else:
 				entity2value2sid2ob_t[entity][value][s][0]= 0.0
 			entity2value2sid2ob_t[entity][value][s][1]= entity2value2truth[entity][value]
+
 
 
 
