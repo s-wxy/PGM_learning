@@ -1,8 +1,8 @@
-HP	Daniel	IMDB
-HP	Emma	IMDB
-HP	Rupert	IMDB
-HP	Daniel	NET
-HP	Daniel	BS
-HP	Emma	BS
-HP	Jonny	BS
-P4	Jonny	HU
+HP	Daniel	IMDB	0
+HP	Emma	IMDB	0
+HP	Rupert	IMDB	0
+HP	Daniel	NET	1
+HP	Daniel	BS	2
+HP	Emma	BS	2
+HP	Jonny	BS	2
+P4	Jonny	HU	3
