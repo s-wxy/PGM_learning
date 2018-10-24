@@ -93,9 +93,9 @@ while it < maxit:
 			# calculate expectation of tf 
 			if it > burnin and it % sample_step == 0:
 				entity2value2prob[entity][value] += 1.0 * entity2value2truth[entity][value] / sample_size
-				print entity2value2prob['HP']
+				# print entity2value2prob['HP']
 
-fw = open('sample_output.txt','w')
+fw = open('sample_output.txt' ,'w')
 for [entity, value2prob] in sorted(entity2value2prob.items()):
 	for [value, prob] in sorted(value2prob.items()):
 		fw.write(entity + ' ' + value + ' ' + str(prob >= threshold))
