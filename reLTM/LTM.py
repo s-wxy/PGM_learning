@@ -160,7 +160,7 @@ if __name__ == '__main__':
 	# 	i +=500
 
 	while i <10000:
-		accuracy = evaluate_ev("/Users/xueying/Dropbox/data/News_time/groundtruth_president.txt",'./sample_out/sample_output'+str(i)+'.txt')
+		accuracy = evaluate_ev(datapath +"News_time/groundtruth_president.txt",'./sample_out/sample_output'+str(i)+'.txt')
 		res.append(accuracy)
 		i += 500
 		print 'iter' + str(i) + 'finish'
