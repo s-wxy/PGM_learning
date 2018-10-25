@@ -131,7 +131,7 @@ def evaluate_ev(gtfile,outfile):
 				else: TN += 1
 
 	accuracy = (TP+TN)*1.0/(TP+FP+FN+TN)
-	return [TP,FP,TN,FN,accuracy]
+	return accuracy
 	# precision = TP / (TP + FP) *1.0
 	# recall = TP / (TP + FN)*1.0  
 	# F1 = 2 / [(1 / precision) + (1 / recall)]*1.0
@@ -139,20 +139,33 @@ def evaluate_ev(gtfile,outfile):
 
 
 if __name__ == '__main__':
+	i = 100
+	res = []
+	# while i < 10000:
 
-	
-	burnin, maxit, sample_step, threshold = 50,100,1,0.5
-	alpha= [[90,10],[90,10]]
-	beta = [10,10]
-	infile = "news_sample.txt"
+	# 	burnin, maxit, sample_step, threshold = 50,100,1,0.5
+	# 	alpha= [[90,10],[90,10]]
+	# 	beta = [10,10]
+	# 	infile = "news_sample.txt"
 
-	entity2value2prob = LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
+	# 	entity2value2prob = LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
 
-	fw = open('sample_output.txt' ,'w')
-	for [entity, value2prob] in sorted(entity2value2prob.items()):
-		for [value, prob] in sorted(value2prob.items()):
-			fw.write(entity + '\t' + value + '\t' + str(prob >= threshold )+ '\n')
+	# 	fw = open('./sample_out/sample_output'+str(i)+'.txt' ,'w')
+	# 	for [entity, value2prob] in sorted(entity2value2prob.items()):
+	# 		for [value, prob] in sorted(value2prob.items()):
+	# 			fw.write(entity + '\t' + value + '\t' + str(prob >= threshold )+ '\n')
 
-	print evaluate_ev("/Users/xueying/Dropbox/data/News_time/groundtruth_president.txt","sample_output.txt")
+	# 	print 'iter' + str(i) + 'finish'
+		
+	# 	i +=500
+
+	while i <10000:
+		accuracy = evaluate_ev("/Users/xueying/Dropbox/data/News_time/groundtruth_president.txt",'./sample_out/sample_output'+str(i)+'.txt')
+		res.append(accuracy)
+		i += 500
+		print 'iter' + str(i) + 'finish'
+
+	print res
+
 
 
