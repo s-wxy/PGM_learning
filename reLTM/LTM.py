@@ -3,7 +3,7 @@ from itertools import chain
 
 datapath = "/Users/xueying/Dropbox/data/"
 
-def LTM(burnin,maxit,sample_step,threshold,alpha,beta,filename):
+def LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile):
 
 	sample_size = maxit/sample_step - burnin/sample_step
 
@@ -100,26 +100,59 @@ def LTM(burnin,maxit,sample_step,threshold,alpha,beta,filename):
 
 	return entity2value2prob
 	
-def evaluate_ev(outfile,gtfile):
-	
+
+def evaluate_ev(gtfile,outfile):
+
 	fg = open(gtfile,'rb')
-	
+	gt = {}
+	for line in fg:
+		arr = line.strip('\n').split('\t')
+		if arr[0] not in gt:
+			gt[arr[0]] = []
+		gt[arr[0]].append(arr[3])
 
+	fr = open(outfile,'rb')
+	out = {}
+	for line in fr:
+		arr = line.strip('\n').split('\t')
+		if arr[0] not in out:
+			out[arr[0]] = {}
+		if arr[1] not in out[arr[0]]:
+			out[arr[0]][arr[1]] = arr[2]	
 
-	fr = open(outfile)
+	TP,FP,TN,FN = 0,0,0,0
+	for entity,value2label in out.items():
+		for value,label in value2label.items():
+			if label == 'True' and entity in gt:
+				if value in gt[entity]: TP += 1					
+				else: FP += 1
+			if label == 'False' and entity in gt:
+				if value in gt[entity]: FN += 1
+				else: TN += 1
+
+	accuracy = (TP+TN)*1.0/(TP+FP+FN+TN)
+	return [TP,FP,TN,FN,accuracy]
+	# precision = TP / (TP + FP) *1.0
+	# recall = TP / (TP + FN)*1.0  
+	# F1 = 2 / [(1 / precision) + (1 / recall)]*1.0
+	# return [accuracy,precision,recall,F1]
 
 
 if __name__ == '__main__':
 
+	
 	burnin, maxit, sample_step, threshold = 50,100,1,0.5
 	alpha= [[90,10],[90,10]]
 	beta = [10,10]
+	infile = "news_sample.txt"
 
 	entity2value2prob = LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
 
 	fw = open('sample_output.txt' ,'w')
 	for [entity, value2prob] in sorted(entity2value2prob.items()):
 		for [value, prob] in sorted(value2prob.items()):
-			fw.write(entity + ' ' + value + ' ' + str(prob >= threshold )+ '\n')
+			fw.write(entity + '\t' + value + '\t' + str(prob >= threshold )+ '\n')
+
+	print evaluate_ev("/Users/xueying/Dropbox/data/News_time/groundtruth_president.txt","sample_output.txt")
 
 
