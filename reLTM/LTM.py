@@ -78,7 +78,7 @@ def LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile):
 				#for c in C_f
 				for [sid, ob_t] in entity2value2sid2ob_t[entity][value].items():
 					o, t = int(ob_t[0]), int(ob_t[1])
-					# 
+					# equation 2
 					entity2value2condi[entity][value][int(truth)] *= 1.0 * (n_sto[sid][t][o] - 1 + alpha[t][o]) / \
 					(n_sto[sid][t][1] + n_sto[sid][t][0] - 1 + alpha[t][1] + alpha[t][0])
 					entity2value2condi[entity][value][int(1-truth)] *= 1.0 * (n_sto[sid][1-t][o] - 1 + alpha[1-t][o]) / \
