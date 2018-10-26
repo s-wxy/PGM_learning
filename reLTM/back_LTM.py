@@ -141,23 +141,23 @@ def evaluate_ev(gtfile,outfile):
 if __name__ == '__main__':
 	i = 100
 	res = []
-	while i < 10000:
+	while i < 1100:
 
 		burnin, maxit, sample_step, threshold = 50,i,1,0.5
-		alpha= [[90,10],[90,10]]
+		alpha= [[50,50],[90,10]]
 		beta = [10,10]
 		infile = "news_sample.txt"
 
 		entity2value2prob = LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
 
-		fw = open('./sample_out0/sample_output'+str(i)+'.txt' ,'w')
+		fw = open('./sample_out1_5/sample_output'+str(i)+'.txt' ,'w')
 		for [entity, value2prob] in sorted(entity2value2prob.items()):
 			for [value, prob] in sorted(value2prob.items()):
 				fw.write(entity + '\t' + value + '\t' + str(prob >= threshold )+ '\n')
 
 		print 'iter' + str(i) + 'finish'
 		
-		i +=500
+		i +=100
 
 	# while i <10000:
 	# 	accuracy = evaluate_ev(datapath +"News_time/groundtruth_president.txt",'./sample_out0/sample_output'+str(i)+'.txt')
