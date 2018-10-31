@@ -3,7 +3,7 @@ from itertools import chain
 
 datapath = "/Users/xueying/Dropbox/data/News_time/"
 
-burnin, maxit, sample_step, threshold = 50,100,1,0.5
+burnin, maxit, sample_step, threshold = 50,1,1,0.5
 alpha= [[90,10],[90,10]]
 beta = [10,10]
 sample_size = maxit/sample_step - burnin/sample_step
@@ -90,6 +90,9 @@ while it < maxit:
 					(n_sto[sid][t][1] + n_sto[sid][t][0] - 1 + alpha[t][1] + alpha[t][0])
 					entity2value2time2condi[entity][value][time][int(1-truth)] *= 1.0 * (n_sto[sid][1-t][o] - 1 + alpha[1-t][o]) / \
 					(n_sto[sid][1-t][1] + n_sto[sid][1-t][0] - 1 + alpha[1-t][1] + alpha[1-t][0])
+					# print entity2value2time2condi
+				if entity2value2time2condi[entity][value][time][int(1-truth)] == 0.0 and entity2value2time2condi[entity][value][time][int(truth)] == 0.0:
+					print entity,value,time
 				if np.random.uniform(0,1) < 1.0 * entity2value2time2condi[entity][value][time][int(1-truth)] / \
 					(entity2value2time2condi[entity][value][time][int(1-truth)] + entity2value2time2condi[entity][value][time][int(truth)]):
 					entity2value2time2truth[entity][value][time] = 1 - truth
