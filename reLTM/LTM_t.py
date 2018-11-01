@@ -3,7 +3,7 @@ from itertools import chain
 
 datapath = "/Users/xueying/Dropbox/data/News_time/"
 
-burnin, maxit, sample_step, threshold = 50,1,1,0.5
+burnin, maxit, sample_step, threshold = 50,100,1,0.5
 alpha= [[90,10],[90,10]]
 beta = [10,10]
 sample_size = maxit/sample_step - burnin/sample_step
@@ -11,7 +11,7 @@ sample_size = maxit/sample_step - burnin/sample_step
 sid2triple, sid2source = {}, {} # double - entity,value, sid mapping source
 entity2value2time2truth, entity2value2time2sid = {},{}
 
-fr = open(datapath + 'data_post_CP.txt','rb')
+fr = open(datapath + 'data_post_CP_new.txt','rb')
 fr.readline()
 for line in fr: 
 	arr = line.strip('\n').split('\t')
