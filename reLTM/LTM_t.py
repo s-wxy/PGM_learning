@@ -1,9 +1,9 @@
 import numpy as np
 from itertools import chain
 
-datapath = "/Users/xueying/Dropbox/data/News_time/"
+datapath = "/Users/xueying/Dropbox/data/"
 
-burnin, maxit, sample_step, threshold = 50,100,1,0.5
+burnin, maxit, sample_step, threshold = 50,10,1,0.5
 alpha= [[90,10],[90,10]]
 beta = [10,10]
 sample_size = maxit/sample_step - burnin/sample_step
@@ -11,7 +11,7 @@ sample_size = maxit/sample_step - burnin/sample_step
 sid2triple, sid2source = {}, {} # double - entity,value, sid mapping source
 entity2value2time2truth, entity2value2time2sid = {},{}
 
-fr = open(datapath + 'data_post_CP_new.txt','rb')
+fr = open(datapath + 'news_sample.txt','rb')
 fr.readline()
 for line in fr: 
 	arr = line.strip('\n').split('\t')
@@ -108,5 +108,5 @@ fw = open('./sample_output_t'+'.txt' ,'w')
 for [entity, value2time2prob] in sorted(entity2value2time2prob.items()):
 	for [value,time2prob] in sorted(value2time2prob.items()):
 		for [time,prob] in sorted(time2prob.items()):
-			fw.write(entity + '\t' + value + '\t' + str(prob >= threshold )+ '\n')
+			fw.write(entity + '\t' + value + '\t' + time + '\t' + str(prob >= threshold )+ '\n')
 
