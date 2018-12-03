@@ -83,10 +83,8 @@ def LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile):
 		# 		fw.write(entity + '\t' + value + '\t' + str(condi)+ '\n')
 		# print entity2value2condi['united_states']['william_jefferson_clinton']
 
-		fwww = open('why0.txt','w')
-		#for c in C_f
-		for [entity,value2truth] in entity2value2truth.items():
-			for [value,truth] in value2truth.items():
+		# fwww = open('why0.txt','w')
+				#for c in C_f
 				for [sid, ob_t] in entity2value2sid2ob_t[entity][value].items():
 					o,t = int(ob_t[0]),int(ob_t[1])
 					
@@ -100,22 +98,22 @@ def LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile):
 					entity2value2condi[entity][value][int(1-truth)] *= 1.0 * (n_sto[sid][1-t][o] + alpha[1-t][o]) / \
 					(n_sto[sid][1-t][1] + n_sto[sid][1-t][0] - 1 + alpha[1-t][1] + alpha[1-t][0])
 
-					if entity == 'united_states' and value == 'william_jefferson_clinton':
-						# print sid
-						res0 =  entity2value2condi['united_states']['william_jefferson_clinton'][int(truth)]
-						# print res0
-						# print entity2value2sid2ob_t['united_states']['william_jefferson_clinton']
-						# print sid
-						res1 = entity2value2sid2ob_t['united_states']['william_jefferson_clinton'][sid]
-						# print res1
-							# print n_sto[sid],o,t
-						res2 = n_sto[sid][t][o] - 1 + alpha[t][o]
-						res3 = n_sto[sid][t][1] + n_sto[sid][t][0] - 1 + alpha[t][1] + alpha[t][0]
-						res4 = 1.0 * (n_sto[sid][t][o] - 1 + alpha[t][o]) / (n_sto[sid][t][1] + n_sto[sid][t][0] - 1 + alpha[t][1] + alpha[t][0])
+					# if entity == 'united_states' and value == 'william_jefferson_clinton':
+					# 	# print sid
+					# 	res0 =  entity2value2condi['united_states']['william_jefferson_clinton'][int(truth)]
+					# 	# print res0
+					# 	# print entity2value2sid2ob_t['united_states']['william_jefferson_clinton']
+					# 	# print sid
+					# 	res1 = entity2value2sid2ob_t['united_states']['william_jefferson_clinton'][sid]
+					# 	# print res1
+					# 		# print n_sto[sid],o,t
+					# 	res2 = n_sto[sid][t][o] - 1 + alpha[t][o]
+					# 	res3 = n_sto[sid][t][1] + n_sto[sid][t][0] - 1 + alpha[t][1] + alpha[t][0]
+					# 	res4 = 1.0 * (n_sto[sid][t][o] - 1 + alpha[t][o]) / (n_sto[sid][t][1] + n_sto[sid][t][0] - 1 + alpha[t][1] + alpha[t][0])
 						
-						# print res2,res3,res4
-						fwww.write(str(res0) + '\t' + str(sid) + '\t' + str(res1[0]) + '\t' + str(res1[1]) + '\t' + str(n_sto[sid][0][0]) + '\t' +\
-							str(n_sto[sid][0][1]) + '\t' + str(n_sto[sid][1][0]) + '\t' + str(n_sto[sid][1][1]) + '\t' + str(o) + '\t' + str(t) + '\t' + str(res2) + '\t' + str(res3)+ '\t' + str(res4) + '\n')
+					# 	# print res2,res3,res4
+					# 	fwww.write(str(res0) + '\t' + str(sid) + '\t' + str(res1[0]) + '\t' + str(res1[1]) + '\t' + str(n_sto[sid][0][0]) + '\t' +\
+					# 		str(n_sto[sid][0][1]) + '\t' + str(n_sto[sid][1][0]) + '\t' + str(n_sto[sid][1][1]) + '\t' + str(o) + '\t' + str(t) + '\t' + str(res2) + '\t' + str(res3)+ '\t' + str(res4) + '\n')
 
 					# print entity2value2condi['united_states']['william_jefferson_clinton'][int(truth)]
 					# entity2value2condi['united_states']['william_jefferson_clinton'][int(1-truth)]
@@ -127,9 +125,10 @@ def LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile):
 
 
 				# sample tf from conditional distribution 
-				if np.random.uniform(0,1) < 1.0 * (entity2value2condi[entity][value][int(1-truth)]) / \
-					(entity2value2condi[entity][value][int(1-truth)] + entity2value2condi[entity][value][int(truth)]):
-					entity2value2truth[entity][value] = 1 - truth
+				# if np.random.uniform(0,1) < 1.0 * (entity2value2condi[entity][value][int(1-truth)]) / \
+				# 	(entity2value2condi[entity][value][int(1-truth)] + entity2value2condi[entity][value][int(truth)]):
+				# 	entity2value2truth[entity][value] = 1 - truth
+				if np.random.uniform(0,1) < entity2value2condi[entity][value][int(1-truth)]:
 					# update counts 
 					for [sid, ob_t] in entity2value2sid2ob_t[entity][value].items():
 						entity2value2sid2ob_t[entity][value][sid][1] = 1 - truth
@@ -182,28 +181,27 @@ def evaluate_ev(gtfile,outfile):
 
 
 if __name__ == '__main__':
-<<<<<<< HEAD
 
 	i = 100
 	res = []
 	# while i < 10:
 
-	burnin, maxit, sample_step, threshold = 50,600,1,0.5
+	burnin, maxit, sample_step, threshold = 50,50,1,0.5
 	alpha= [[90,10],[90,10]]
 	beta = [10,10]
 	infile = "data_text_CP_new.txt"
 
-	# LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
+	LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
 
-	entity2value2prob = LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
+	# entity2value2prob = LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
 
 	# # print entity2value2prob
 
-	fw = open(outpath +'out_text.txt' ,'w')
-	for [entity, value2prob] in sorted(entity2value2prob.items()):
-		for [value, prob] in sorted(value2prob.items()):
-			# fw.write(entity + '\t' + value + '\t' + str(prob >= threshold )+ '\n')
-			fw.write(entity + '\t' + value + '\t' + str(prob)+ '\n')
+	# fw = open(outpath +'out_text.txt' ,'w')
+	# for [entity, value2prob] in sorted(entity2value2prob.items()):
+	# 	for [value, prob] in sorted(value2prob.items()):
+	# 		# fw.write(entity + '\t' + value + '\t' + str(prob >= threshold )+ '\n')
+	# 		fw.write(entity + '\t' + value + '\t' + str(prob)+ '\n')
 
 		# print 'iter' + str(i) + 'finish'
 
