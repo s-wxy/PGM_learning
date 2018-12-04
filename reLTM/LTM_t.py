@@ -123,7 +123,7 @@ if __name__ == '__main__':
 	burnin, maxit, sample_step, threshold = 50,100,1,0.5
 	alpha= [[90,10],[90,10]]
 	beta = [10,10]
-	infile = "news_sample.txt"
+	infile = "data_text_CP_new.txt"
 
 	entity2value2time2prob = LTM_t(burnin,maxit,sample_step,threshold,alpha,beta,infile)
 
