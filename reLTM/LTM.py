@@ -186,22 +186,22 @@ if __name__ == '__main__':
 	res = []
 	# while i < 10:
 
-	burnin, maxit, sample_step, threshold = 50,50,1,0.5
+	burnin, maxit, sample_step, threshold = 30,50,1,0.5
 	alpha= [[90,10],[90,10]]
 	beta = [10,10]
 	infile = "data_text_CP_new.txt"
 
-	LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
+	# LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
 
-	# entity2value2prob = LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
+	entity2value2prob = LTM(burnin,maxit,sample_step,threshold,alpha,beta,infile)
 
 	# # print entity2value2prob
 
-	# fw = open(outpath +'out_text.txt' ,'w')
-	# for [entity, value2prob] in sorted(entity2value2prob.items()):
-	# 	for [value, prob] in sorted(value2prob.items()):
-	# 		# fw.write(entity + '\t' + value + '\t' + str(prob >= threshold )+ '\n')
-	# 		fw.write(entity + '\t' + value + '\t' + str(prob)+ '\n')
+	fw = open(outpath +'out_text.txt' ,'w')
+	for [entity, value2prob] in sorted(entity2value2prob.items()):
+		for [value, prob] in sorted(value2prob.items()):
+			# fw.write(entity + '\t' + value + '\t' + str(prob >= threshold )+ '\n')
+			fw.write(entity + '\t' + value + '\t' + str(prob)+ '\n')
 
 		# print 'iter' + str(i) + 'finish'
 
